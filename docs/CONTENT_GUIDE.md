@@ -109,7 +109,7 @@ Only change a status after actually cooking the dish.
 - Store photos in `public/images/recipes/`.
 - Name the main photo `<slug>.webp`. Name extra shots `<slug>-2.webp`, `<slug>-3.webp`, and so on.
 - Prefer WebP. To convert: `cwebp -q 82 input.png -o <slug>.webp`.
-- Keep the original full-size file if you want it, but don't reference filenames with spaces from frontmatter.
+- Keep original full-size files in `assets/originals/recipes/`, not in `public/`. Everything in `public/` is copied into the built site and served publicly. Never reference originals from frontmatter.
 - In frontmatter, the path starts at `/images/...`, without `public`.
 - Write `image_alt` from what's actually visible in the photo: the food, sides, and plate. Don't describe things that aren't there.
 - If no photo exists, set both `image` and `image_alt` to `null`.

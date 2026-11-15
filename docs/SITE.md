@@ -85,7 +85,7 @@ Defined in `src/app/globals.css` under `@theme`: `ivory`, `paper`, `ink`, `ink-s
 
 ## Known follow-ups
 
-- **Unused originals in `public/images/recipes/`.** The five large PNGs (about 13 MB) with spaces in their names aren't referenced, but static export copies everything in `public/` to `out/`. Move them out of `public/` before deploying. `Caramelized Pork Chop with Stone Fruit-3.png` looks like a second pork-chop shot that could become `pork-chops-with-apple-dijon-pan-sauce-2.webp` if a gallery is added.
+- **Original photos** live in `assets/originals/recipes/`, outside `public/`, so they aren't copied into `out/` or served. `Caramelized Pork Chop with Stone Fruit-3.png` looks like a second pork-chop shot that could become `pork-chops-with-apple-dijon-pan-sauce-2.webp` if a gallery is added.
 - **The burger has no photo.** The page shows a "No photo yet" placeholder.
 - **`date_published` is unset** on every recipe. Fill it in when the site goes live.
 - Possible enhancements: remember ingredient checks per recipe in `localStorage`; a small photo gallery for extra shots.

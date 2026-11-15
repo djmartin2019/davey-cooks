@@ -75,7 +75,8 @@ See [docs/CONTENT_GUIDE.md](docs/CONTENT_GUIDE.md) for every field and writing c
 
 ```
 content/recipes/        Recipe MDX files (the content)
-public/images/recipes/  Recipe photos (WebP)
+public/images/recipes/  Recipe photos used by the site (WebP)
+assets/originals/       Full-size original photos, kept out of the build
 src/app/                Pages and layout (Next.js App Router)
 src/components/         UI components (header, recipe cards, recipe sections…)
 src/lib/recipes.ts      Loads and validates recipes
