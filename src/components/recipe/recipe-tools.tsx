@@ -5,9 +5,17 @@ import { useEffect, useRef, useState } from "react";
 const buttonClass =
   "inline-flex items-center gap-2 border border-linen px-3.5 py-2 text-sm font-medium transition-colors hover:border-ink aria-pressed:border-olive aria-pressed:bg-olive aria-pressed:text-ivory";
 
+/**
+ * Desktop only. Phones rarely print, and iOS ignores window.print() in a
+ * home-screen app, so the button would silently do nothing there.
+ */
 export function PrintButton() {
   return (
-    <button type="button" onClick={() => window.print()} className={buttonClass}>
+    <button
+      type="button"
+      onClick={() => window.print()}
+      className={`${buttonClass} max-md:hidden standalone:hidden`}
+    >
       <svg aria-hidden="true" viewBox="0 0 16 16" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.3">
         <path d="M4.5 6V2.5h7V6M4.5 11.5h-2v-5h11v5h-2" />
         <path d="M4.5 9.5h7v4h-7z" />

@@ -135,7 +135,8 @@ export default async function RecipePage({ params }: PageProps<"/recipes/[slug]"
               </div>
             </div>
 
-            <figure className="md:col-span-5 lg:col-span-6">
+            {/* Hidden in print as a whole, so the photo frame leaves no blank gap. */}
+            <figure className="no-print md:col-span-5 lg:col-span-6">
               <div className="aspect-[4/5] md:sticky md:top-6 lg:aspect-[5/6]">
                 <RecipePhoto
                   src={recipe.image}
@@ -143,7 +144,6 @@ export default async function RecipePage({ params }: PageProps<"/recipes/[slug]"
                   title={recipe.title}
                   priority
                   sizes="(min-width: 1024px) 45vw, (min-width: 768px) 42vw, 100vw"
-                  className="no-print"
                 />
               </div>
             </figure>

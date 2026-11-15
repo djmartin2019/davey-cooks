@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/lib/format";
-import { getRecipeSummaries, isCooked } from "@/lib/recipes";
 
 const description =
   "Davey Cooks is a home cooking journal: the recipes I make, what works, what doesn't, and what I'll do differently next time.";
@@ -14,12 +13,7 @@ export const metadata: Metadata = {
   openGraph: { title: `About · ${site.name}`, description, url: "/about/", images: [site.ogImage] },
 };
 
-export default async function AboutPage() {
-  const recipes = await getRecipeSummaries();
-  // A different photo from the homepage hero, when there is one.
-  const withPhotos = recipes.filter((r) => isCooked(r) && r.image);
-  const photo = withPhotos[1] ?? withPhotos[0];
-
+export default function AboutPage() {
   return (
     <div className="mx-auto max-w-7xl px-5 pt-12 sm:px-8 md:pt-20">
       <div className="grid gap-12 md:grid-cols-12 md:gap-10">
@@ -84,24 +78,18 @@ export default async function AboutPage() {
           </Link>
         </div>
 
-        {photo?.image && (
-          <figure className="md:col-span-5 lg:col-span-5 lg:col-start-8">
-            <div className="relative aspect-[4/5] overflow-hidden bg-linen-soft md:sticky md:top-6">
-              <Image
-                src={photo.image}
-                alt={photo.image_alt ?? ""}
-                fill
-                sizes="(min-width: 768px) 40vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-            <figcaption className="mt-3 text-sm text-ink-soft">
-              <Link href={`/recipes/${photo.slug}/`} className="link-underline font-serif text-base italic">
-                {photo.title}
-              </Link>
-            </figcaption>
-          </figure>
-        )}
+        <figure className="md:col-span-5 lg:col-span-5 lg:col-start-8">
+          <div className="relative aspect-square overflow-hidden bg-linen-soft md:sticky md:top-6">
+            <Image
+              src="/images/about-me.webp"
+              alt="Davey in a black turtleneck, chin in hand, gazing upward in front of a terracotta circle."
+              fill
+              priority
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </figure>
       </div>
     </div>
   );
