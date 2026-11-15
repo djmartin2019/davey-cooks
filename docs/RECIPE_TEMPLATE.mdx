@@ -1,0 +1,88 @@
+---
+# Copy this file to content/recipes/<slug>.mdx and fill it in.
+# See docs/CONTENT_GUIDE.md for every field and convention.
+# Unknown values: use null. Never guess times, dates, or quantities.
+
+title: "Recipe Title"
+slug: recipe-slug # lowercase-kebab-case; must match the filename; becomes /recipes/recipe-slug
+description: "One or two sentences describing the finished dish."
+
+category: dinner # breakfast | lunch | dinner | side | dessert | snack | drink
+protein: chicken # chicken | pork | beef | seafood | vegetarian | other | null
+status: planned # planned | cooked | cooked-needs-refinement
+
+servings: null # whole number, or null if unknown
+estimated_prep_minutes: null
+estimated_cook_minutes: null
+
+image: null # "/images/recipes/recipe-slug.webp" only once that file exists
+image_alt: null # describe what is actually in the photo; required when image is set
+
+tags:
+  - tag-one
+  - tag-two
+
+date_cooked: null # "YYYY-MM-DD" (quoted) of the most recent real cook; null if planned or unknown
+date_published: null # "YYYY-MM-DD" (quoted) when the page goes live
+
+featured: false
+
+source: "Where the recipe came from, e.g. a cookbook, a URL, or a home-cooking discussion"
+---
+
+{/* Do not add an H1. The page title is rendered from the `title` field. */}
+{/* These MDX comments are invisible on the site. Delete them once the recipe is filled in. */}
+{/* Do not use HTML comments (<!-- -->); they break MDX parsing. */}
+
+## Overview
+
+{/* Two or three sentences: what the dish is and what it is served with. */}
+
+A short description of the dish.
+
+## Ingredients
+
+{/* Record what was actually used, with quantities. If a quantity was not measured, say so instead of guessing. */}
+{/* Use ### subsections only when the recipe has distinct components (e.g. Chicken, Sauce, Serving). */}
+
+### Main Ingredients
+
+- Quantity and ingredient
+- Quantity and ingredient
+
+### Sauce
+
+- Quantity and ingredient
+
+## Instructions
+
+{/* Numbered steps. Include target internal temperatures where they matter. */}
+
+1. First step.
+2. Second step.
+3. Third step.
+
+## Kitchen Notes
+
+{/* Only real observations from an actual cook. For a planned recipe, replace this section with a note that it has not been cooked yet. */}
+
+### What Worked
+
+- What turned out well.
+
+### What I'd Change
+
+- What was off: texture, seasoning, timing, plating.
+
+## Next Time
+
+{/* Proposed changes. These are untested. Never edit the Ingredients or Instructions above to match them until they have actually been cooked. */}
+
+> **Not yet tested.** These are proposed changes for the next attempt.
+
+- A specific change to try.
+- Something to measure or record next time.
+
+## References
+
+- Original source or inspiration. If there is none, say so.

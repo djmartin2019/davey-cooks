@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Davey Cooks — design tokens
+   Warm ivory paper, charcoal ink, olive and terracotta accents.
+------------------------------------------------------------------- */
+@theme {
+  --color-ivory: #f7f4ee;
+  --color-paper: #fbf9f5;
+  --color-ink: #292a25;
+  --color-ink-soft: #57564e;
+  --color-olive: #526146;
+  --color-olive-soft: #e6e8dc;
+  --color-terracotta: #a75a3c;
+  --color-terracotta-deep: #8c4930;
+  --color-linen: #d7cab6;
+  --color-linen-soft: #ece4d6;
+
+  --font-serif: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --tracking-label: 0.14em;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 1.5rem;
+}
+
+body {
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "kern";
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-terracotta) 22%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Small uppercase label used for eyebrows and metadata. */
+@utility label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* Underline that grows on hover, for text links. */
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: var(--color-linen);
+  transition: text-decoration-color 150ms ease, color 150ms ease;
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Recipe prose — styles for MDX-rendered recipe sections.
+------------------------------------------------------------------- */
+/* Note: these rules are unlayered, so they win over Tailwind utilities.
+   Font size is set with utilities on each section, not here. */
+.recipe-prose {
+  line-height: 1.7;
+}
+
+/* Overview: a large serif lead paragraph. */
+.overview-prose {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+.recipe-prose.overview-prose blockquote {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+@media (min-width: 768px) {
+  .overview-prose {
+    font-size: 1.45rem;
+  }
+}
+
+/* Ingredient group subheadings (### Sauce, ### Serving...). */
+.recipe-prose.ingredients-prose h3 {
+  font-size: 1.15rem;
+  font-style: italic;
+  margin-top: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Lead-in lines such as "As cooked:" above the steps. */
+.recipe-prose.steps-prose > p {
+  color: var(--color-ink-soft);
+}
+
+.recipe-prose.next-time-prose blockquote {
+  border-color: var(--color-terracotta);
+}
+.recipe-prose > * + * {
+  margin-top: 1em;
+}
+.recipe-prose h3 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.25;
+  margin-top: 1.75em;
+}
+.recipe-prose h3:first-child {
+  margin-top: 0;
+}
+.recipe-prose h3 + * {
+  margin-top: 0.6em;
+}
+.recipe-prose h4 {
+  font-weight: 600;
+  margin-top: 1.5em;
+}
+.recipe-prose strong {
+  font-weight: 600;
+}
+.recipe-prose a {
+  color: var(--color-terracotta-deep);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.recipe-prose ul {
+  list-style: none;
+  padding: 0;
+}
+.recipe-prose ul > li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+.recipe-prose ul > li + li {
+  margin-top: 0.55em;
+}
+.recipe-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.2rem;
+  top: 0.72em;
+  width: 0.4rem;
+  height: 1px;
+  background: var(--color-terracotta);
+}
+.recipe-prose ol {
+  list-style: decimal;
+  padding-left: 1.4rem;
+}
+.recipe-prose ol > li + li {
+  margin-top: 0.5em;
+}
+.recipe-prose blockquote {
+  border-left: 2px solid var(--color-terracotta);
+  padding: 0.15rem 0 0.15rem 1rem;
+  color: var(--color-ink-soft);
+  font-size: 0.97rem;
+}
+.recipe-prose code {
+  font-size: 0.9em;
+  background: var(--color-linen-soft);
+  padding: 0.1em 0.3em;
+  border-radius: 2px;
+}
+.recipe-prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-linen);
+  margin: 2em 0;
+}
+
+/* Ingredient checklist: list items are rendered by IngredientItem. */
+.recipe-prose ul.ingredient-list > li {
+  padding-left: 0;
+}
+.recipe-prose ul.ingredient-list > li::before {
+  display: none;
+}
+.recipe-prose ul.ingredient-list > li + li {
+  margin-top: 0;
+}
+
+.ingredient-check:checked {
+  border-color: var(--color-olive);
+  background-color: var(--color-olive);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23f7f4ee' stroke-width='2'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Kitchen notes: ### subheadings become small labels. */
+.recipe-notes h3 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-olive);
+  margin-top: 2em;
+}
+.recipe-notes h3:first-child {
+  margin-top: 0;
+}
+
+/* Instructions: large serif step numbers. */
+.recipe-prose ol.step-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: step;
+}
+.recipe-prose ol.step-list > li {
+  counter-increment: step;
+  position: relative;
+  padding: 1.25rem 0 1.35rem 3.5rem;
+  border-top: 1px solid var(--color-linen);
+  margin: 0;
+}
+.recipe-prose ol.step-list > li:first-child {
+  border-top: 0;
+  padding-top: 0.25rem;
+}
+.recipe-prose ol.step-list > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.85rem;
+  font-family: var(--font-serif);
+  font-size: 2.25rem;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--color-terracotta);
+  font-variant-numeric: lining-nums;
+}
+.recipe-prose ol.step-list > li:first-child::before {
+  top: -0.15rem;
+}
+@media (min-width: 768px) {
+  .recipe-prose ol.step-list > li {
+    font-size: 1.125rem;
+    padding-left: 4.25rem;
+  }
+  .recipe-prose ol.step-list > li::before {
+    font-size: 2.75rem;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Print — a clean, single-column recipe card.
+------------------------------------------------------------------- */
+@media print {
+  @page {
+    margin: 1.6cm;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+  .recipe-prose {
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+  .recipe-prose ol.step-list > li {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    break-inside: avoid;
+  }
+  .recipe-prose ol.step-list > li::before {
+    font-size: 16pt;
+    top: 0.45rem;
+    color: #000;
+  }
+  section,
+  aside {
+    break-inside: auto;
+  }
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+}
+.print-only {
+  display: none;
+}
