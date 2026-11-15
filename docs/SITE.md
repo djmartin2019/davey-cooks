@@ -45,7 +45,7 @@ The site runs on the shared VPS as static files served by Apache. There's no Nod
 3. Checks the output: the key pages exist, and there's one page per `.mdx` recipe.
 4. Copies `out/` into `releases/<timestamp>-<sha>/` and switches `current` to it in a single atomic step. Apache doesn't need a reload.
 5. Keeps the newest 3 releases (`KEEP_RELEASES`) and never deletes the live one.
-6. Smoke-tests the local Apache directly, bypassing Cloudflare: `/`, `/recipes/`, `/about/`, `/og-image.png` (200) and a missing page (404). If anything fails, it prints the rollback command.
+6. Smoke-tests the local Apache directly, bypassing Cloudflare: `/`, `/recipes/`, `/about/`, `/og-image.png`, `/manifest.webmanifest`, `/version.json`, `/app-icons/icon-192.png` (200) and a missing page (404). If anything fails, it prints the rollback command.
 
 `./scripts/deploy.sh --rollback` points `current` at the release before the live one. Overrides: `APP_DIR`, `KEEP_RELEASES`, `SITE_HOST`, `SKIP_SMOKE=1`.
 
@@ -110,8 +110,10 @@ Apache vhosts: `/etc/apache2/sites-available/davey-cooks.djm-apps.com.conf` and 
 ## Home screen app (PWA)
 
 - `src/app/manifest.ts` emits `/manifest.webmanifest` (standalone display, ivory theme). `appleWebApp` metadata in `src/app/layout.tsx` sets the iOS title and status bar.
-- Icons come from `assets/brand/app-icon.svg`: the site's steam-over-pan mark, full-bleed with no rounded corners because iOS and Android apply their own mask. `npm run icons` renders `src/app/apple-icon.png` (180, the iOS home-screen icon) and `public/icons/icon-{192,512}.png` (the manifest icons; the 512 one is also the maskable icon). The PNGs are committed, so the VPS build does not run this.
+- Icons come from `assets/brand/app-icon.svg`: the site's steam-over-pan mark, full-bleed with no rounded corners because iOS and Android apply their own mask. `npm run icons` renders `src/app/apple-icon.png` (180, the iOS home-screen icon) and `public/app-icons/icon-{192,512}.png` (the manifest icons; the 512 one is also the maskable icon). They live in `app-icons/`, not `icons/`: Apache on Ubuntu aliases `/icons/` to its own icon directory by default, so files there 404 (or 403) on the live site. The PNGs are committed, so the VPS build does not run this.
 - `/install/` explains installing on iPhone (Safari) and Android (Chrome). The footer's "Get the app" card links to it. Both use a `standalone:` Tailwind variant (`@media (display-mode: standalone)`, defined in `globals.css`): the footer card hides, and the install page says it's already installed, when the site is opened from the home screen.
+- **Updates:** iOS resumes a saved copy of the home-screen app instead of reloading it, and Apache sends no `Cache-Control` on HTML, so Safari can keep showing an old build. Each build writes a unique ID (`NEXT_PUBLIC_BUILD_ID`, set in `next.config.ts`) into the page and into `/version.json` (`src/app/version.json/route.ts`). `src/components/update-check.tsx` fetches `/version.json` uncached when the page opens or returns to the foreground (at most once a minute). If the ID differs, it reloads the page once at `?v=<id>`, a URL no cache can answer, then strips the parameter. A sessionStorage guard limits it to one reload per page per build, so it can't loop.
+- Recommended server follow-up (not applied): send `Cache-Control: no-cache` for `.html`, `.txt`, `.json`, and `.webmanifest`, and a long `immutable` cache for `/_next/static/`, in the site's vhost.
 - No service worker: the site needs a connection, but iOS "Add to Home Screen" works without one.
 
 ## Design tokens

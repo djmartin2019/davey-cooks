@@ -26,7 +26,7 @@ export function SiteFooter() {
             className="group mt-8 flex items-center gap-4 border border-linen bg-paper p-4 transition-colors hover:border-terracotta standalone:hidden"
           >
             <Image
-              src="/icons/icon-192.png"
+              src="/app-icons/icon-192.png"
               alt=""
               width={48}
               height={48}

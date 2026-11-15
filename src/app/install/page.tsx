@@ -68,7 +68,7 @@ export default function InstallPage() {
         </h1>
         <div className="mt-10 flex items-start gap-5">
           <Image
-            src="/icons/icon-192.png"
+            src="/app-icons/icon-192.png"
             alt=""
             width={72}
             height={72}

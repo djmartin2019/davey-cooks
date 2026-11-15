@@ -103,7 +103,8 @@ step "Building (npm run build)"
 npm run build
 
 step "Checking build output"
-for f in index.html 404.html recipes/index.html about/index.html og-image.png; do
+for f in index.html 404.html recipes/index.html about/index.html og-image.png \
+         manifest.webmanifest version.json app-icons/icon-192.png; do
   [[ -f "out/$f" ]] || die "expected out/$f is missing; not deploying."
 done
 recipe_count="$(find out/recipes -mindepth 2 -maxdepth 2 -name index.html | wc -l | tr -d ' ')"
@@ -158,6 +159,9 @@ else
   check /recipes/ 200
   check /about/ 200
   check /og-image.png 200
+  check /manifest.webmanifest 200
+  check /version.json 200
+  check /app-icons/icon-192.png 200
   check /this-page-does-not-exist/ 404
 
   if [[ "$failed" -eq 1 ]]; then
