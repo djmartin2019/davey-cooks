@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Home-screen / PWA icon. Same mark as src/app/icon.svg, but full-bleed
+       (no rounded corners: iOS and Android apply their own mask) and nudged
+       to sit centered within the maskable safe zone. -->
+  <rect width="64" height="64" fill="#a75a3c"/>
+  <g fill="none" stroke="#f7f4ee" stroke-width="3.4" stroke-linecap="round" transform="translate(0 2.75)">
+    <path d="M23 12c-2.6 3 2.6 5.6 0 9"/>
+    <path d="M32 9c-2.6 3 2.6 5.6 0 9s2.6 5.6 0 9"/>
+    <path d="M41 12c-2.6 3 2.6 5.6 0 9"/>
+    <path d="M12 36h40"/>
+    <path d="M15 36c1.3 8 7.8 13.5 17 13.5S47.7 44 49 36"/>
+  </g>
+</svg>

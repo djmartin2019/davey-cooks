@@ -10,6 +10,7 @@ npm run lint
 npx tsc --noEmit
 npm run build   # clean static export to out/ (wipes .next/ and out/ first)
 npm run clean   # remove .next/ and out/
+npm run icons   # re-render home-screen/PWA icons from assets/brand/app-icon.svg
 ```
 
 Preview the exported site exactly as Apache will serve it:
@@ -104,6 +105,12 @@ Apache vhosts: `/etc/apache2/sites-available/davey-cooks.djm-apps.com.conf` and 
 - **Link previews:** the home, Recipes, About, and 404 pages use the branded card `public/og-image.png` (1200×630). Recipe pages use the recipe photo, falling back to the branded card when there's no photo.
 - To change the card, edit `assets/brand/og-image.html` and re-render it at 1200×630, e.g. `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --virtual-time-budget=8000 --screenshot=public/og-image.png "file://$PWD/assets/brand/og-image.html"`. The page loads its fonts from Google Fonts, so it needs a network connection.
 - Cooked recipes emit schema.org `Recipe` JSON-LD built only from the source: ingredients and steps from the MDX lists, plus times, servings, and category when recorded. No ratings, nutrition, or dates are invented.
+
+## Home screen app (PWA)
+
+- `src/app/manifest.ts` emits `/manifest.webmanifest` (standalone display, ivory theme). `appleWebApp` metadata in `src/app/layout.tsx` sets the iOS title and status bar.
+- Icons come from `assets/brand/app-icon.svg`: the site's steam-over-pan mark, full-bleed with no rounded corners because iOS and Android apply their own mask. `npm run icons` renders `src/app/apple-icon.png` (180, the iOS home-screen icon) and `public/icons/icon-{192,512}.png` (the manifest icons; the 512 one is also the maskable icon). The PNGs are committed, so the VPS build does not run this.
+- No service worker: the site needs a connection, but iOS "Add to Home Screen" works without one.
 
 ## Design tokens
 

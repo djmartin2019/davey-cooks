@@ -26,6 +26,13 @@ export const metadata: Metadata = {
     template: `%s · ${site.name}`,
   },
   description: site.description,
+  applicationName: site.name,
+  // Home-screen web app on iOS (manifest + apple-icon.png cover the rest).
+  appleWebApp: {
+    capable: true,
+    title: site.name,
+    statusBarStyle: "default",
+  },
   openGraph: {
     type: "website",
     siteName: site.name,
