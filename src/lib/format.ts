@@ -7,6 +7,13 @@ export const site = {
     "A personal cooking journal: recipes made at home, what worked, what didn't, and what I'll do differently next time.",
   /** Production URL. Override with NEXT_PUBLIC_SITE_URL (e.g. for a staging build). */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://davey-cooks.djm-apps.com",
+  /** Branded link-preview card (source: assets/brand/og-image.html). */
+  ogImage: {
+    url: "/og-image.png",
+    width: 1200,
+    height: 630,
+    alt: "Davey Cooks: Good food. Some experiments. A few lessons learned.",
+  },
 };
 
 export function formatMinutes(minutes: number): string {

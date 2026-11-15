@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: site.name,
     locale: "en_US",
+    images: [site.ogImage],
   },
   twitter: { card: "summary_large_image" },
 };

@@ -6,21 +6,17 @@ import { SectionHeading } from "@/components/section-heading";
 import { capitalize, site } from "@/lib/format";
 import { getRecipeSummaries, isCooked } from "@/lib/recipes";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const recipes = await getRecipeSummaries();
-  const hero = recipes.find((r) => isCooked(r) && r.image);
-  return {
-    title: { absolute: `${site.name} — Good food, made at home` },
+export const metadata: Metadata = {
+  title: { absolute: `${site.name} — Good food, made at home` },
+  description: site.description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: site.name,
     description: site.description,
-    alternates: { canonical: "/" },
-    openGraph: {
-      title: site.name,
-      description: site.description,
-      url: "/",
-      images: hero?.image ? [{ url: hero.image, alt: hero.image_alt ?? "" }] : undefined,
-    },
-  };
-}
+    url: "/",
+    images: [site.ogImage],
+  },
+};
 
 export default async function HomePage() {
   const recipes = await getRecipeSummaries();

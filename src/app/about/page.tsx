@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "About",
   description,
   alternates: { canonical: "/about/" },
-  openGraph: { title: `About · ${site.name}`, description, url: "/about/" },
+  openGraph: { title: `About · ${site.name}`, description, url: "/about/", images: [site.ogImage] },
 };
 
 export default async function AboutPage() {

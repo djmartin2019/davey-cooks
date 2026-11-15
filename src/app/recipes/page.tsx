@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { RecipeGallery } from "@/components/recipe-gallery";
+import { site } from "@/lib/format";
 import { getRecipeSummaries } from "@/lib/recipes";
 
 const description =
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   title: "Recipes",
   description,
   alternates: { canonical: "/recipes/" },
-  openGraph: { title: "Recipes · Davey Cooks", description, url: "/recipes/" },
+  openGraph: { title: "Recipes · Davey Cooks", description, url: "/recipes/", images: [site.ogImage] },
 };
 
 export default async function RecipesPage() {

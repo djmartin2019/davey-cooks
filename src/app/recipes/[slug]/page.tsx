@@ -30,11 +30,11 @@ export async function generateMetadata({ params }: PageProps<"/recipes/[slug]">)
       title: recipe.title,
       description: recipe.description,
       url,
-      images: recipe.image ? [{ url: recipe.image, alt: recipe.image_alt ?? "" }] : undefined,
+      images: recipe.image ? [{ url: recipe.image, alt: recipe.image_alt ?? "" }] : [site.ogImage],
       tags: recipe.tags,
     },
     twitter: {
-      card: recipe.image ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title: recipe.title,
       description: recipe.description,
     },

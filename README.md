@@ -17,7 +17,7 @@ content/recipes/*.mdx  ──►  build (Next.js)  ──►  out/  ──►  A
 
 1. **Write a recipe** as `content/recipes/<slug>.mdx`. YAML frontmatter holds the metadata (title, status, times, photo, dates, and so on), and the body uses standard sections: Overview, Ingredients, Instructions, Kitchen Notes, Next Time, Food Safety, References.
 2. **Build.** Each file's frontmatter is parsed with `gray-matter` and validated with Zod. A missing field, a slug that doesn't match the filename, or a photo that doesn't exist stops the build with a clear error. Each recipe becomes a page at `/recipes/<slug>/`.
-3. **Deploy** by uploading the `out/` folder to the web server.
+3. **Deploy:** on the VPS, `git pull` then `./scripts/deploy.sh`. It builds the site, publishes `out/` as a new release, and Apache serves it immediately.
 
 ### Pages
 
@@ -61,6 +61,19 @@ To preview the built site the way Apache will serve it:
 npm run build
 cd out && python3 -m http.server 4173   # http://localhost:4173
 ```
+
+## Deploying
+
+On the VPS (Apache serves `/var/www/apps/davey-cooks/current`):
+
+```bash
+cd /var/www/apps/davey-cooks/repo
+git pull
+./scripts/deploy.sh             # build, publish a new release, smoke test
+./scripts/deploy.sh --rollback  # switch back to the previous release
+```
+
+Run it as your normal user, never with `sudo`. See [docs/SITE.md](docs/SITE.md#deployment) for details.
 
 ## Adding a recipe
 

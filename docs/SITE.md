@@ -26,6 +26,30 @@ cd out && python3 -m http.server 4173   # http://localhost:4173
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | Absolute site URL used for canonical links, Open Graph images, and recipe structured data. Defaults to the production URL `https://davey-cooks.djm-apps.com`. Override it only for a different host, e.g. staging. |
 
+## Deployment
+
+The site runs on the shared VPS as static files served by Apache. There's no Node process or port.
+
+```
+/var/www/apps/davey-cooks/
+├── repo/                      git checkout; builds happen here
+├── releases/<timestamp>-<sha>/ one copy of out/ per deploy
+└── current -> releases/...    Apache DocumentRoot
+```
+
+`scripts/deploy.sh`, run as `david` from `repo/` after `git pull`:
+
+1. Refuses to run as root, checks Node ≥ 20.9, and checks that the files are owned by the current user.
+2. Runs `npm ci` and `npm run build` (a clean build).
+3. Checks the output: the key pages exist, and there's one page per `.mdx` recipe.
+4. Copies `out/` into `releases/<timestamp>-<sha>/` and switches `current` to it in a single atomic step. Apache doesn't need a reload.
+5. Keeps the newest 3 releases (`KEEP_RELEASES`) and never deletes the live one.
+6. Smoke-tests the local Apache directly, bypassing Cloudflare: `/`, `/recipes/`, `/about/`, `/og-image.png` (200) and a missing page (404). If anything fails, it prints the rollback command.
+
+`./scripts/deploy.sh --rollback` points `current` at the release before the live one. Overrides: `APP_DIR`, `KEEP_RELEASES`, `SITE_HOST`, `SKIP_SMOKE=1`.
+
+Apache vhosts: `/etc/apache2/sites-available/davey-cooks.djm-apps.com.conf` and the Certbot-generated `davey-cooks.djm-apps.com-le-ssl.conf`.
+
 ## Routes
 
 | Route | Source |
@@ -76,7 +100,9 @@ cd out && python3 -m http.server 4173   # http://localhost:4173
 
 ## SEO
 
-- Per-page titles, descriptions, canonical URLs, and Open Graph/Twitter metadata, using the recipe photo when there is one.
+- Per-page titles, descriptions, canonical URLs, and Open Graph/Twitter metadata.
+- **Link previews:** the home, Recipes, About, and 404 pages use the branded card `public/og-image.png` (1200×630). Recipe pages use the recipe photo, falling back to the branded card when there's no photo.
+- To change the card, edit `assets/brand/og-image.html` and re-render it at 1200×630, e.g. `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --virtual-time-budget=8000 --screenshot=public/og-image.png "file://$PWD/assets/brand/og-image.html"`. The page loads its fonts from Google Fonts, so it needs a network connection.
 - Cooked recipes emit schema.org `Recipe` JSON-LD built only from the source: ingredients and steps from the MDX lists, plus times, servings, and category when recorded. No ratings, nutrition, or dates are invented.
 
 ## Design tokens
