@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Matches when the site is opened from the home screen as an installed app. */
+@custom-variant standalone (@media (display-mode: standalone));
+
 /* ------------------------------------------------------------------
    Davey Cooks — design tokens
    Warm ivory paper, charcoal ink, olive and terracotta accents.

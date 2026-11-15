@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { site } from "@/lib/format";
 import { Wordmark } from "./wordmark";
@@ -19,6 +20,28 @@ export function SiteFooter() {
             A home cooking journal. Recipes I&rsquo;ve made, notes on how they turned out, and
             what I&rsquo;ll try next time.
           </p>
+          {/* Hidden once the site is running as the installed app. */}
+          <Link
+            href="/install/"
+            className="group mt-8 flex items-center gap-4 border border-linen bg-paper p-4 transition-colors hover:border-terracotta standalone:hidden"
+          >
+            <Image
+              src="/icons/icon-192.png"
+              alt=""
+              width={48}
+              height={48}
+              className="size-12 shrink-0 rounded-[22%]"
+            />
+            <span>
+              <span className="block font-serif text-lg leading-tight">Get the app</span>
+              <span className="mt-1 block text-sm text-ink-soft">
+                Add Davey Cooks to your home screen{" "}
+                <span aria-hidden="true" className="inline-block text-terracotta transition-transform group-hover:translate-x-0.5">
+                  &rarr;
+                </span>
+              </span>
+            </span>
+          </Link>
         </div>
         <div className="flex flex-col justify-between gap-8 md:items-end">
           <nav aria-label="Footer">

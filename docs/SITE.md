@@ -59,6 +59,7 @@ Apache vhosts: `/etc/apache2/sites-available/davey-cooks.djm-apps.com.conf` and 
 | `/recipes/` | `src/app/recipes/page.tsx` (+ client filter `src/components/recipe-gallery.tsx`) |
 | `/recipes/<slug>/` | `src/app/recipes/[slug]/page.tsx`, one page per MDX file via `generateStaticParams()` |
 | `/about/` | `src/app/about/page.tsx` |
+| `/install/` | `src/app/install/page.tsx`: how to add the site to a phone's home screen (linked from the footer) |
 | 404 | `src/app/not-found.tsx` (exported as `out/404.html`) |
 
 `trailingSlash: true` emits `recipes/<slug>/index.html`, so Apache serves clean directory URLs. Point Apache's `ErrorDocument 404` at `/404.html`.
@@ -110,6 +111,7 @@ Apache vhosts: `/etc/apache2/sites-available/davey-cooks.djm-apps.com.conf` and 
 
 - `src/app/manifest.ts` emits `/manifest.webmanifest` (standalone display, ivory theme). `appleWebApp` metadata in `src/app/layout.tsx` sets the iOS title and status bar.
 - Icons come from `assets/brand/app-icon.svg`: the site's steam-over-pan mark, full-bleed with no rounded corners because iOS and Android apply their own mask. `npm run icons` renders `src/app/apple-icon.png` (180, the iOS home-screen icon) and `public/icons/icon-{192,512}.png` (the manifest icons; the 512 one is also the maskable icon). The PNGs are committed, so the VPS build does not run this.
+- `/install/` explains installing on iPhone (Safari) and Android (Chrome). The footer's "Get the app" card links to it. Both use a `standalone:` Tailwind variant (`@media (display-mode: standalone)`, defined in `globals.css`): the footer card hides, and the install page says it's already installed, when the site is opened from the home screen.
 - No service worker: the site needs a connection, but iOS "Add to Home Screen" works without one.
 
 ## Design tokens
