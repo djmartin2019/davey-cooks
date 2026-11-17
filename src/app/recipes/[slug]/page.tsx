@@ -5,7 +5,7 @@ import { RecipeCard } from "@/components/recipe-card";
 import { RecipePhoto } from "@/components/recipe-photo";
 import { ProcessPhotos } from "@/components/recipe/process-photos";
 import { RecipeSections } from "@/components/recipe/recipe-sections";
-import { KeepAwakeToggle, PrintButton } from "@/components/recipe/recipe-tools";
+import { KeepAwakeToggle, PrintButton, ShareButton } from "@/components/recipe/recipe-tools";
 import { StatusTag } from "@/components/status-tag";
 import { capitalize, formatDate, formatMinutes, isoDuration, site, totalMinutes } from "@/lib/format";
 import { listItems, splitSections } from "@/lib/recipe-sections";
@@ -31,13 +31,16 @@ export async function generateMetadata({ params }: PageProps<"/recipes/[slug]">)
       title: recipe.title,
       description: recipe.description,
       url,
-      images: recipe.image ? [{ url: recipe.image, alt: recipe.image_alt ?? "" }] : [site.ogImage],
+      // Branded card for every recipe for now. Recipe photos are WebP, which
+      // some messaging apps won't show in link previews.
+      images: [site.ogImage],
       tags: recipe.tags,
     },
     twitter: {
       card: "summary_large_image",
       title: recipe.title,
       description: recipe.description,
+      images: [site.ogImage],
     },
   };
 }
@@ -131,6 +134,10 @@ export default async function RecipePage({ params }: PageProps<"/recipes/[slug]"
                     Jump to ingredients
                   </a>
                 )}
+                <ShareButton
+                  title={recipe.title}
+                  url={new URL(`/recipes/${recipe.slug}/`, site.url).toString()}
+                />
                 <PrintButton />
                 <KeepAwakeToggle />
               </div>
