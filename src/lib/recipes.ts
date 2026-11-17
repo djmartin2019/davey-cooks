@@ -33,6 +33,16 @@ export const recipeFrontmatter = z
     estimated_cook_minutes: z.number().int().nonnegative().nullable(),
     image: z.string().startsWith("/images/recipes/").nullable(),
     image_alt: z.string().min(1).nullable(),
+    /** Optional process shots shown below the recipe, in cooking order. */
+    gallery: z
+      .array(
+        z.object({
+          src: z.string().startsWith("/images/recipes/"),
+          alt: z.string().min(1),
+          caption: z.string().min(1).optional(),
+        }),
+      )
+      .default([]),
     tags: z.array(z.string().regex(kebab)),
     date_cooked: isoDate.nullable(),
     date_published: isoDate.nullable(),
@@ -78,6 +88,11 @@ function readRecipeFile(fileName: string): Recipe {
   }
   if (recipe.image && !fs.existsSync(path.join(PUBLIC_DIR, recipe.image))) {
     throw new Error(`content/recipes/${fileName}: image ${recipe.image} does not exist in public/`);
+  }
+  for (const photo of recipe.gallery) {
+    if (!fs.existsSync(path.join(PUBLIC_DIR, photo.src))) {
+      throw new Error(`content/recipes/${fileName}: gallery image ${photo.src} does not exist in public/`);
+    }
   }
 
   return { ...recipe, body: content };

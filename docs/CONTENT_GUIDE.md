@@ -43,13 +43,14 @@ Use these `##` headings in this order, and skip any the source doesn't support:
 | `slug` | yes | string | Lowercase kebab-case. Must equal the filename without `.mdx`. Unique. |
 | `description` | yes | string | One or two sentences, used for cards and meta tags. |
 | `category` | yes | string | e.g. `dinner`. Current values: `dinner`. |
-| `protein` | yes, nullable | string or `null` | Current values: `chicken`, `pork`, `beef`. |
+| `protein` | yes, nullable | string or `null` | Current values: `chicken`, `pork`, `beef`, `vegetarian`. |
 | `status` | yes | enum | See section 3. |
 | `servings` | yes, nullable | integer or `null` | |
 | `estimated_prep_minutes` | yes, nullable | integer or `null` | Only if recorded. Never estimate after the fact. |
 | `estimated_cook_minutes` | yes, nullable | integer or `null` | Same as above. |
 | `image` | yes, nullable | string or `null` | Root-relative path, e.g. `/images/recipes/<slug>.webp`. Only set it when the file exists. |
 | `image_alt` | yes, nullable | string or `null` | Required when `image` is set. Describe what is actually in the photo. |
+| `gallery` | no | list of `{ src, alt, caption? }` | Extra process shots (`<slug>-2.webp`, …), listed in cooking order. Shown under the recipe in an "In the kitchen" section. Each file must exist; write `alt` from what's visible, and keep captions to details the recipe already records. |
 | `tags` | yes | list of strings | Lowercase kebab-case. Can be empty (`[]`). |
 | `date_cooked` | yes, nullable | `"YYYY-MM-DD"` or `null` | Most recent real cook. Must be `null` for `planned`. Quote the date so YAML keeps it a string. |
 | `date_published` | yes, nullable | `"YYYY-MM-DD"` or `null` | When the page went live. Quoted. |

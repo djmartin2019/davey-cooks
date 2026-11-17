@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RecipeCard } from "@/components/recipe-card";
 import { RecipePhoto } from "@/components/recipe-photo";
+import { ProcessPhotos } from "@/components/recipe/process-photos";
 import { RecipeSections } from "@/components/recipe/recipe-sections";
 import { KeepAwakeToggle, PrintButton } from "@/components/recipe/recipe-tools";
 import { StatusTag } from "@/components/status-tag";
@@ -152,6 +153,8 @@ export default async function RecipePage({ params }: PageProps<"/recipes/[slug]"
 
         {/* -------------------------------------------------------- Body */}
         <RecipeSections sections={sections} status={recipe.status} />
+
+        <ProcessPhotos photos={recipe.gallery} />
 
         {/* ----------------------------------------------- Provenance */}
         {(recipe.source || recipe.date_cooked || recipe.tags.length > 0) && (
