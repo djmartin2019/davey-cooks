@@ -103,9 +103,9 @@ Apache vhosts: `/etc/apache2/sites-available/davey-cooks.djm-apps.com.conf` and 
 ## SEO
 
 - Per-page titles, descriptions, canonical URLs, and Open Graph/Twitter metadata.
-- **Link previews:** every page, recipes included, uses the branded card `public/og-image.png` (1200×630). Recipe photos are WebP, which some messaging apps won't show in previews. Per-recipe cards with the dish name are a planned follow-up.
+- **Link previews:** a recipe with a photo previews with that photo. `npm run build` runs `scripts/generate-og-images.mjs`, which crops each main photo to a 1200×630 JPEG in `public/og/recipes/` (git-ignored), because some messaging apps won't show WebP previews. Every other page, and any recipe without a photo, uses the branded card `public/og-image.png` (1200×630).
 - **Share button:** recipe pages have a Share button (`ShareButton` in `src/components/recipe/recipe-tools.tsx`). It opens the native share sheet when `navigator.share` exists, which is the only way to share from the installed home-screen app, and otherwise copies the canonical recipe URL to the clipboard.
-- To change the card, edit `assets/brand/og-image.html` and re-render it at 1200×630, e.g. `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --virtual-time-budget=8000 --screenshot=public/og-image.png "file://$PWD/assets/brand/og-image.html"`. The page loads its fonts from Google Fonts, so it needs a network connection.
+- To change the branded card, edit `assets/brand/og-image.html` and re-render it at 1200×630, e.g. `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --virtual-time-budget=8000 --screenshot=public/og-image.png "file://$PWD/assets/brand/og-image.html"`. The page loads its fonts from Google Fonts, so it needs a network connection.
 - Cooked recipes emit schema.org `Recipe` JSON-LD built only from the source: ingredients and steps from the MDX lists, plus times, servings, and category when recorded. No ratings, nutrition, or dates are invented.
 
 ## Home screen app (PWA)

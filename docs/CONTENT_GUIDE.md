@@ -114,6 +114,7 @@ Only change a status after actually cooking the dish.
 - In frontmatter, the path starts at `/images/...`, without `public`.
 - Write `image_alt` from what's actually visible in the photo: the food, sides, and plate. Don't describe things that aren't there.
 - If no photo exists, set both `image` and `image_alt` to `null`.
+- The build crops the main photo into the recipe's 1200×630 link preview. Without a photo, the link uses the branded card.
 
 ## 5. Tested vs. Proposed
 

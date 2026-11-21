@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# generated recipe link previews
+/public/og/
+
 # production
 /build
 
